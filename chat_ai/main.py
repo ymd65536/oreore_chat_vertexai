@@ -1,5 +1,5 @@
 import chainlit as cl
-import vertexai_chat as ver_chat
+import vertexai_chat.chat as ver_chat
 
 
 @cl.on_chat_start
@@ -9,5 +9,5 @@ async def on_chat_start():
 
 @cl.on_message
 async def on_message(input_message):
-    res = ver_chat.chat_model_response(input_message)
-    await cl.Message(content=res).send()
+    response = ver_chat.chat_model_response(input_message.content)
+    await cl.Message(content=response.text).send()

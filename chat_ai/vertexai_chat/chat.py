@@ -1,13 +1,12 @@
-import os
 import vertexai
 from vertexai.language_models import ChatModel
 from vertexai.language_models import InputOutputTextPair
 
 
-def chat_model_response(input_text):
+def chat_model_response(input_message):
 
-    LOCALTION = os.getenv("LOCALTION")
-    MODEL_NAME = "chat-bison@001"
+    LOCALTION = "asia-northeast1"
+    MODEL_NAME = "chat-bison@002"
 
     vertexai.init(location=LOCALTION)
     chat_model = ChatModel.from_pretrained(MODEL_NAME)
@@ -22,6 +21,4 @@ def chat_model_response(input_text):
         temperature=0.3,
     )
 
-    response = chat.send_message(input_text)
-
-    return response.text
+    return chat.send_message(input_message)
