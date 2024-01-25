@@ -1,5 +1,11 @@
 # オレオレChatVertexAIを作る
 
+## SetUp
+
+```bash
+pip install chainlit==1.0.200
+```
+
 ## quick-start
 
 ```bash
