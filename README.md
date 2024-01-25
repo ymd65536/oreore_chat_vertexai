@@ -17,12 +17,16 @@ chainlit run main.py
 pip install langchain-google-vertexai==0.0.1.post1
 ```
 
+```bash
+PROJECT_ID=`gcloud config list --format 'value(core.project)'`
+```
+
 ## Upload data to GCS
 
 ```bash
 PROJECT_ID=`gcloud config list --format 'value(core.project)'`
 ME_EMBEDDING_DIR="$PROJECT_ID-me-bucket"
 index="documents/samples"
-json_file="sample.txt"
-set -x && gsutil cp $json_file gs://$ME_EMBEDDING_DIR/$index/$json_file
+json_file="sample.csv"
+gsutil cp $json_file gs://$ME_EMBEDDING_DIR/$index/$json_file
 ```

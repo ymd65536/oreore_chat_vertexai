@@ -1,9 +1,10 @@
 from ai_config import config as config
 
-from langchain.document_loaders import GCSDirectoryLoader
-from langchain.embeddings import VertexAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.vectorstores import chroma
+from langchain_community.document_loaders import GCSDirectoryLoader
+from langchain_community.vectorstores import Chroma
+# from langchain_community.embeddings import VertexAIEmbeddings
+from langchain_google_vertexai import VertexAIEmbeddings
 
 # GCS保存場所
 doc_folder_prefix = config.doc_folder_prefix
@@ -16,14 +17,16 @@ loader = GCSDirectoryLoader(
     prefix=doc_folder_prefix
 )
 
+documents = loader.load()
+
 # テキスト分割
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=1000,
-    chunk_overlap=50,
+    chunk_size=20,
+    chunk_overlap=0,
     separators=["\n\n", "\n", ".", "!", "?", ",", " ", ""],
 )
 
-split_documents = text_splitter.split_documents(loader)
+split_documents = text_splitter.split_documents(documents)
 
 # embeddingを初期化
 embeddings = VertexAIEmbeddings(
@@ -31,9 +34,9 @@ embeddings = VertexAIEmbeddings(
 )
 
 # Chromaを初期化
-chroma_db = chroma(
+chroma_db = Chroma(
     persist_directory=f"gs://{config.ME_EMBEDDING_DIR}/{index_folder_prefix}",
-    embeddings_function=embeddings
+    embedding_function=embeddings
 )
 
 # ドキュメントを追加する
