@@ -12,3 +12,7 @@ pip install chainlit==1.0.200
 cd quick_start
 chainlit run main.py
 ```
+
+```bash
+pip install langchain-google-vertexai==0.0.1.post1
+```
