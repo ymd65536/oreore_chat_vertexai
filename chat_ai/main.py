@@ -4,7 +4,7 @@ import vertexai_chat.chat as ver_chat
 
 @cl.on_chat_start
 async def on_chat_start():
-    await cl.Message(content='メッセージを入力').send()
+    await cl.Message(content='まとめたい文章を入力してください。').send()
 
 
 @cl.on_message
